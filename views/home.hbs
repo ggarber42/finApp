@@ -9,13 +9,11 @@
 <body>
     {{> header}}
     <main>
-
+        <form action="/save" method="POST">
+            <input type="text" placeholder="Nome" name='text'>
+            <button type="submit">Submit</button>
+        </form>
     </main>
     {{> footer}}
 </body>
-<script>
-    let myObj = {
-        text: 'Meu precioso'
-    }
-</script>
 </html>
