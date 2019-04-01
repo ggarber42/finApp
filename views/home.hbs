@@ -9,6 +9,13 @@
 <body>
     {{> header}}
     <main>
+    <section>
+        <ul>
+    {{#each arr}}
+        <li>{{@index}} {{this}}</li>
+    {{/each}}
+        </ul>
+    </section>
         <form action="/save" method="POST">
             <input type="text" placeholder="Nome" name='text'>
             <button type="submit">Submit</button>

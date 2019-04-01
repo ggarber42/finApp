@@ -3,7 +3,7 @@ const hbs = require('hbs');
 var bodyParser = require('body-parser');
 
 let {mongoose} = require('./db/mongoose');
-let {Test} = require('./models/test.js')
+let {Test} = require('./models/test')
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -16,15 +16,22 @@ hbs.registerHelper('getDate', () => new Date());
 app.set('view engine','hbs');
 
 app.get('/', (req,res)=> {
-       res.render('home.hbs');
+       res.render('home.hbs',{
+           arr: [1,2,3]
+       });
 })
 
 app.post('/save', (req,res) => {
-    // let test = new Test({
-    //     text: 
-    // });
-    console.log(req.body.text);
-    res.send();
+    let test = new Test({
+        text: req.body.text
+    });
+    test.save().then((doc) => {
+        // res.send(doc);
+        res.redirect('/');
+    }, (err) => {
+        res.status(400).send(err);
+    })
+    // console.log(req.body.text);
 });
 
 app.listen(port, () => {

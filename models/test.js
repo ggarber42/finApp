@@ -1,4 +1,4 @@
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
 var Test = mongoose.model('Test',{
     text: {
@@ -8,4 +8,4 @@ var Test = mongoose.model('Test',{
     }
 })
 
-module.export = {Test}
+module.exports = {Test}
