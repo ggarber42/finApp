@@ -16,9 +16,11 @@ hbs.registerHelper('getDate', () => new Date());
 app.set('view engine','hbs');
 
 app.get('/', (req,res)=> {
-       res.render('home.hbs',{
-           arr: [1,2,3]
-       });
+    Test.find((err, test) => {
+        if (err) throw err;
+        console.log(test)
+        res.render('home.hbs', {test });
+      });
 })
 
 app.post('/save', (req,res) => {
