@@ -12,7 +12,7 @@
     <section>
         <ul>
     {{#each test}}
-        <li>{{this.text}}</li>
+        <li>{{this.text}}<a href="/update/{{this.id}}">Update</a><a href="/delete/{{this._id}}">Delete</a></li>
     {{/each}}
         </ul>
     </section>

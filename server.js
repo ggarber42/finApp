@@ -4,6 +4,7 @@ var bodyParser = require('body-parser');
 
 let {mongoose} = require('./db/mongoose');
 let {Test} = require('./models/test')
+let {ObjectID} = require('mongodb');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -18,7 +19,6 @@ app.set('view engine','hbs');
 app.get('/', (req,res)=> {
     Test.find((err, test) => {
         if (err) throw err;
-        console.log(test)
         res.render('home.hbs', {test });
       });
 })
@@ -36,7 +36,36 @@ app.post('/save', (req,res) => {
     // console.log(req.body.text);
 });
 
+app.get('/update/:id', (req,res) => {
+    const id = req.params.id;
+    if(!ObjectID.isValid(id)) {
+        res.status(404).send('errou');
+    };
+    Test.findById(id).then((test) => {
+        if(!test){
+            res.status(404).send();
+        }
+        // res.send({todo}).redirect('/');
+        res.status(200).send('Ok');
+    }, err => {
+        res.status(400).send();
+    });
+});
+
+app.get('/delete/:id', (req,res) => {
+    const id = req.params.id;
+    if(!ObjectID.isValid(id)) return;
+    Test.findByIdAndRemove(id).then((test) => {
+        if(!test){
+            return res.status(404).send();
+        }
+        res.redirect('/');
+    }, err => {
+        res.status(400).send();
+    });
+});
+
 app.listen(port, () => {
-    console.log('Server is upp');
+    console.log('Server is up...');
     console.log(`port ${port}`);
 });
