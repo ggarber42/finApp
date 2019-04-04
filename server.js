@@ -1,6 +1,7 @@
 const express = require('express');
 const hbs = require('hbs');
 var bodyParser = require('body-parser');
+const _ = require('lodash');
 
 let {mongoose} = require('./db/mongoose');
 let {Test} = require('./models/test')
@@ -36,20 +37,21 @@ app.post('/save', (req,res) => {
     // console.log(req.body.text);
 });
 
-app.get('/update/:id', (req,res) => {
-    const id = req.params.id;
-    if(!ObjectID.isValid(id)) {
-        res.status(404).send('errou');
-    };
-    Test.findById(id).then((test) => {
-        if(!test){
-            res.status(404).send();
+app.post('/update/:id', (req,res) => {
+    var id = req.params.id;
+    var body = _.pick(req.body ,['text']);  
+    console.log(id);
+    console.log(body);
+    if(!ObjectID.isValid(id)){
+        res.status(404).send();
+    } 
+    Test.findByIdAndUpdate(id, {$set: body}, {new: true}).then((test) => {
+        if(!todo) {
+            return res.status(404).send();
         }
-        // res.send({todo}).redirect('/');
-        res.status(200).send('Ok');
-    }, err => {
-        res.status(400).send();
-    });
+        res.redirect('/');
+    }).catch((e) => res.status(400).send())
+    
 });
 
 app.get('/delete/:id', (req,res) => {

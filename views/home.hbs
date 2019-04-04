@@ -12,7 +12,7 @@
     <section>
         <ul>
     {{#each test}}
-        <li>{{this.text}}<a href="/update/{{this.id}}">Update</a><a href="/delete/{{this._id}}">Delete</a></li>
+        <li>{{this.text}}<button onclick="update(this)" data-id='{{this.id}}' data-text = {{this.text}}>Update</button><a href="/delete/{{this._id}}">Delete</a></li>
     {{/each}}
         </ul>
     </section>
@@ -20,7 +20,19 @@
             <input type="text" placeholder="Nome" name='text'>
             <button type="submit">Submit</button>
         </form>
+        <form action="" method="POST">
+            <input type="text" placeholder="Update" name='text'>
+            <button type="submit">Update</button>
+        </form>
     </main>
     {{> footer}}
+    <script>
+        function update(el){
+            const updateForm = document.querySelector('form:last-child');
+            const updateFormInput = document.querySelector('form:last-child input');
+            updateFormInput.value = el.dataset.text;
+            updateForm.setAttribute('action',`/update/${el.dataset.id}`);
+        }
+    </script>
 </body>
 </html>
