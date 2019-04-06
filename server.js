@@ -41,12 +41,12 @@ app.post('/update/:id', (req,res) => {
     var id = req.params.id;
     var body = _.pick(req.body ,['text']);  
     console.log(id);
-    console.log(body);
+    console.log(body.text);
     if(!ObjectID.isValid(id)){
         res.status(404).send();
     } 
     Test.findByIdAndUpdate(id, {$set: body}, {new: true}).then((test) => {
-        if(!todo) {
+        if(!test) {
             return res.status(404).send();
         }
         res.redirect('/');
