@@ -4,11 +4,13 @@ var bodyParser = require('body-parser');
 const _ = require('lodash');
 
 let {mongoose} = require('./db/mongoose');
-let {Test} = require('./models/test')
+let {Test} = require('./models/test');
+let {Gasto} = require('./models/gasto');
 let {ObjectID} = require('mongodb');
 
 const app = express();
 const port = process.env.PORT || 3000;
+app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -18,17 +20,33 @@ hbs.registerHelper('getDate', () => new Date());
 app.set('view engine','hbs');
 
 app.get('/', (req,res)=> {
-    Test.find((err, test) => {
+    // Test.find((err, test) => {
+    //     if (err) throw err;
+    //     res.render('home.hbs', {test});
+    //   });
+    Gasto.find((err, gasto) => {
         if (err) throw err;
-        res.render('home.hbs', {test });
+        res.render('home.hbs', {gasto});
       });
 })
 
 app.post('/save', (req,res) => {
-    let test = new Test({
-        text: req.body.text
+    // let test = new Test({
+    //     text: req.body.text 
+    // });
+    // test.save().then((doc) => {
+    //     // res.send(doc);
+    //     res.redirect('/');
+    // }, (err) => {
+    //     res.status(400).send(err);
+    // })
+    let gasto = new Gasto({
+        valor: req.body.valor,
+        mes: req.body.mes,
+        categoria: req.body.categoria,
+        observacao: req.body.observacao
     });
-    test.save().then((doc) => {
+    gasto.save().then((doc) => {
         // res.send(doc);
         res.redirect('/');
     }, (err) => {
