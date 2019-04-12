@@ -5,24 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Controle Financeiro</title>
+    <link rel="stylesheet" href="styles/home.css">
 </head>
 <body style="text-align: center">
     {{> header}}
     <main>
+    <section id="info-sec">
+        <table>
+            <tr>
+                <th>Gasto total</th>
+                <th>Gasto Disponivel</th>
+            </tr>
+            <tr>
+                <td></td>
+            </tr>
+        </table>
+    </section>
     <section id="table-sec">
-        <table style="width: 80%; margin: 0 auto">
+        <table>
             <tr>
                 <th>Valor</th>
                 <th>Mês</th>
                 <th>Categoria</th>
                 <th>Observações</th>
+                <th>Editar</th>
             </tr>
             {{#each gasto}}
-                <tr>
-                    <td>{{this.valor}}</td>
-                    <td>{{this.mes}}</td>
-                    <td>{{this.categoria}}</td>
-                    <td>{{this.observacao}}</td>
+                <tr data-id='{{this.id}}'>
+                    <td class='cell'>{{this.valor}}</td>
+                    <td class='cell'>{{this.mes}}</td>
+                    <td class='cell'>{{this.categoria}}</td>
+                    <td class='cell'>{{this.observacao}}</td>
+                    <td><button onclick="edit(this)">Edit</button></td>
+                    <td><button onclick="deleteEl(this)">Delete</button></td>
                 </tr>
             {{/each}}
         </table>
@@ -33,84 +48,23 @@
         </ul> -->
     </section>
     <section id="form-sec">
-        <form action="/save" method="POST" style="width: 80%; margin: 0 auto">
+        <form id="save-form" action="/save" method="POST" style="width: 80%">
             <input type="number" placeholder="Valor" name="valor" min="0" value="0.01">
             <input type="text" placeholder="Mes" name="mes">
             <input type="text" placeholder="Categoria" name="categoria">
             <input type="text" placeholder="Observação" name="observacao">
             <button type="submit">Submit</button>
         </form>
-        <form action="" method="POST" style="width: 80%; margin: 0 auto">
-            <input type="text" placeholder="Update" name='text'>
+        <form id="update-form"  method="POST" style="width: 80%">
+            <input type="number" placeholder="Valor" name="valor" min="0" value="0.01">
+            <input type="text" placeholder="Mes" name="mes">
+            <input type="text" placeholder="Categoria" name="categoria">
+            <input type="text" placeholder="Observação" name="observacao">
             <button type="submit">Update</button>
         </form>
     </section>
     </main>
     {{> footer}}
-    <script>
-        //month Array
-        const month = [
-            "Janeiro",
-            "Fevereiro",
-            "Março",
-            "Abril",
-            "Maio",
-            "Junho",
-            "Julho",
-            "Agosto",
-            "Setembro",
-            "Outubro",
-            "Novembro",
-            "Dezembro"
-            ]
-        //functions
-        function update(el){
-            const updateForm = document.querySelector('form:last-child');
-            const updateFormInput = document.querySelector('form:last-child input');
-            updateFormInput.value = el.dataset.text;
-            updateForm.setAttribute('action',`/update/${el.dataset.id}`);
-        }
-        function getMoth() {
-            const d = new Date();
-            mesAtual.value = month[d.getMonth()];
-        }
-        /*function preventEnterSubmission(e){
-            debugger;
-            console.log(e.keyCode);
-            if(e.keyCode === 13) {
-                e.preventDefault();
-                console.log('sub prevented');
-                return false;
-            }
-        }*/
-        //event listeners
-        const novoGasto = document.querySelector('[name=valor]');
-        novoGasto.addEventListener('change',getMoth);
-        const mesAtual = document.querySelector('[name=mes]');
-       /* const forms = document.querySelectorAll('form input');
-        forms.forEach(form => {
-            form.addEventListener('keyup',preventEnterSubmission);        
-        });*/
-    </script>
-    <style>
-    table {
-        font-family: arial, sans-serif;
-        border-collapse: collapse;
-        width: 100%;
-    }
-    
-    td, th {
-        border: 1px solid #dddddd;
-        text-align: left;
-        padding: 8px;
-    }
-    th{
-        text-align: center;
-    }
-    
-    tr:nth-child(even) {
-        background-color: #dddddd;
-    }
-    </style>
+    <script src="js/app.js"></script>
 </body>
 </html>

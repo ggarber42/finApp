@@ -11,6 +11,7 @@ let {ObjectID} = require('mongodb');
 const app = express();
 const port = process.env.PORT || 3000;
 app.use(express.static(__dirname + '/public'));
+// app.use(express.static(path.join(__dirname, '/public')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -57,14 +58,14 @@ app.post('/save', (req,res) => {
 
 app.post('/update/:id', (req,res) => {
     var id = req.params.id;
-    var body = _.pick(req.body ,['text']);  
+    // var body = _.pick(req.body ,['valor','mes','categoria','observacao']);  
     console.log(id);
-    console.log(body.text);
+    console.log(req.body);
     if(!ObjectID.isValid(id)){
         res.status(404).send();
     } 
-    Test.findByIdAndUpdate(id, {$set: body}, {new: true}).then((test) => {
-        if(!test) {
+    Gasto.findByIdAndUpdate(id, {$set: req.body}, {new: true}).then((gasto) => {
+        if(!gasto) {
             return res.status(404).send();
         }
         res.redirect('/');
@@ -75,8 +76,8 @@ app.post('/update/:id', (req,res) => {
 app.get('/delete/:id', (req,res) => {
     const id = req.params.id;
     if(!ObjectID.isValid(id)) return;
-    Test.findByIdAndRemove(id).then((test) => {
-        if(!test){
+    Gasto.findByIdAndRemove(id).then((gasto) => {
+        if(!gasto){
             return res.status(404).send();
         }
         res.redirect('/');
