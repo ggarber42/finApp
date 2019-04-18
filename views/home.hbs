@@ -17,7 +17,8 @@
                 <th>Gasto Disponivel</th>
             </tr>
             <tr>
-                <td></td>
+                    <td id='gasto-total'></td>
+                    <td id='gasto-disponivel'></td>
             </tr>
         </table>
     </section>
@@ -29,6 +30,7 @@
                 <th>Categoria</th>
                 <th>Observações</th>
                 <th>Editar</th>
+                <th>Deletar</th>
             </tr>
             {{#each gasto}}
                 <tr data-id='{{this.id}}'>
@@ -44,14 +46,14 @@
     </section>
     <section id="form-sec">
         <form id="save-form" action="/save" method="POST" style="width: 80%">
-            <input type="number" placeholder="Valor" name="valor" min="0" value="0.01">
+            <input type="number" placeholder="Valor" name="valor" min="0" step="0.01">
             <input type="text" placeholder="Mes" name="mes">
             <input type="text" placeholder="Categoria" name="categoria">
             <input type="text" placeholder="Observação" name="observacao">
             <button type="submit">Submit</button>
         </form>
         <form id="update-form"  method="POST" style="width: 80%">
-            <input type="number" placeholder="Valor" name="valor" min="0" value="0.01">
+            <input type="number" placeholder="Valor" name="valor" min="0" step="0.01">
             <input type="text" placeholder="Mes" name="mes">
             <input type="text" placeholder="Categoria" name="categoria">
             <input type="text" placeholder="Observação" name="observacao">

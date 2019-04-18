@@ -10,7 +10,7 @@ table {
   
   td, th {
     border: 1px solid #dddddd;
-    text-align: left;
+    text-align: center;
     padding: 8px;
   }
   
@@ -20,4 +20,8 @@ table {
   
   form{
     margin: 0 auto 5em;
+  }
+
+  tr td.cell:first-child:before, #gasto-total:before, #gasto-disponivel:before{
+    content: 'R$ ';
   }
