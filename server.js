@@ -30,6 +30,13 @@ app.get('/', (req,res)=> {
       });
 })
 
+app.get('/json', (req, res) => {
+    Gasto.find((err,gasto) => {
+        if(err) throw err;
+        res.status(200).send({gasto});
+    });
+});
+
 app.post('/save', (req,res) => {
     // let test = new Test({
     //     text: req.body.text 
