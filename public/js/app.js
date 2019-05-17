@@ -37,7 +37,7 @@ const gastoMes = {
 
 novoGasto.addEventListener('change',getMoth); //completa mes no input
 gastosValor.forEach(valor => valor.textContent = parseFloat(valor.textContent).toFixed(2)); // formata em duas casa decimais os gastos
-mesGasto.forEach(mes => mes.textContent !== month[new Date().getMonth()]? mes.parentElement.style.display = 'none': null); // se não é do mês não carrega
+//mesGasto.forEach(mes => mes.textContent !== month[new Date().getMonth()]? mes.parentElement.style.display = 'none': null); // se não é do mês não carrega
 //preenche campos
 document.querySelector('#gasto-total').textContent = gastoMes.total; 
 document.querySelector('#gasto-disponivel').textContent = gastoMes.disponivel;
